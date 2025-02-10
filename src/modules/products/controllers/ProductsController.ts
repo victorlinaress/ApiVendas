@@ -14,7 +14,7 @@ export default class ProductsController {
     return response.json(products);
   }
 
-  public async now(request: Request, response: Response): Promise<Response> {
+  public async show(request: Request, response: Response): Promise<Response> {
     const { id } = request.params;
 
     const showProduct = new ShowProductService();
