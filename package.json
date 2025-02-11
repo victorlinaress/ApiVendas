@@ -23,7 +23,11 @@
     "typescript": "^5.7.3"
   },
   "dependencies": {
+    "-": "^0.0.1",
     "@types/cors": "^2.8.17",
+    "@types/joi": "^17.2.3",
+    "D": "^1.0.0",
+    "celebrate": "^15.0.3",
     "pg": "^8.13.1",
     "reflect-metadata": "^0.2.2",
     "typeorm": "0.2.29"
