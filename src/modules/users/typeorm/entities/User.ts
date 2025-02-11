@@ -1,10 +1,15 @@
-import { defaultMaxListeners } from "events";
-import { Column, CreateDateColumn, Entity, EntityRepository, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { defaultMaxListeners } from 'events';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  EntityRepository,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 
 @Entity('users')
-class User
-
-{
+class User {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
@@ -25,8 +30,6 @@ class User
 
   @UpdateDateColumn()
   update_at: Date;
-
-
 }
 
 export default User;
