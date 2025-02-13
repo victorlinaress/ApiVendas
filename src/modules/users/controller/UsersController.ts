@@ -1,21 +1,52 @@
 import CreateUserService from '../services/CreateUserService';
 import ListUserService from '../services/ListUserService';
 import { Request, Response } from 'express';
+import AppError from '@shared/erros/AppErro'; 
 
 export default class UsersController {
   public async index(request: Request, response: Response): Promise<Response> {
-    const listUser = new ListUserService();
-    const users = await listUser.execute();
+    try {
+      const listUser = new ListUserService();
+      const users = await listUser.execute();
+      return response.json(users);
+    } catch (error: unknown) {
+      // logando o erro detalhado
+      console.error('Erro ao listar usuários:', error);
 
-    return response.json(users);
+      // exibindo mensagem genérica
+      return response.status(500).json({
+        status: 'error',
+        message: 'Internal server error',
+      });
+    }
   }
 
   public async create(request: Request, response: Response): Promise<Response> {
     const { name, email, password } = request.body;
     const createUser = new CreateUserService();
 
-    const user = await createUser.execute({ name, email, password });
+    try {
+      // tentando criar o usuário
+      const user = await createUser.execute({ name, email, password });
+      return response.status(201).json(user); // sucesso ao criar usuário
+    } catch (error: unknown) {
+      // Logando o erro detalhado para ver mais informações
+      console.error('Erro ao criar o usuário:', error);
 
-    return response.json(user);
+      if (error instanceof AppError) {
+        // erro personalizado
+        return response.status(error.statusCode).json({
+          status: 'error',
+          message: error.message,
+        });
+      }
+
+      // se não for um erro esperado, retorna erro genérico
+      console.error('Erro inesperado:', error);
+      return response.status(500).json({
+        status: 'error',
+        message: 'Internal server error',
+      });
+    }
   }
 }
