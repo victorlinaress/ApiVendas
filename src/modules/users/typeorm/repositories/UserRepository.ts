@@ -1,36 +1,36 @@
-import { Entity, EntityRepository, Repository } from 'typeorm';
+import { EntityRepository, Repository } from 'typeorm'; // Use apenas os dois imports necessários
 import User from '../entities/User';
 
-EntityRepository(User);
+@EntityRepository(User)
 class UsersRepository extends Repository<User> {
   public async findByName(name: string): Promise<User | undefined> {
-    const User = await this.findOne({
+    const user = await this.findOne({
       where: {
         name,
       },
     });
 
-    return User;
+    return user;
   }
 
   public async findById(id: string): Promise<User | undefined> {
-    const User = await this.findOne({
+    const user = await this.findOne({
       where: {
         id,
       },
     });
 
-    return User;
+    return user;
   }
 
   public async findByEmail(email: string): Promise<User | undefined> {
-    const User = await this.findOne({
+    const user = await this.findOne({
       where: {
         email,
       },
     });
 
-    return User;
+    return user;
   }
 }
 
