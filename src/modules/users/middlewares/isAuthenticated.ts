@@ -1,25 +1,22 @@
-import AppError from '@shared/erros/AppErro';
-import { verify } from 'jsonwebtoken';
 import { NextFunction, Request, Response } from 'express';
+import { verify } from 'jsonwebtoken';
+import AppError from '@shared/erros/AppErro';
 import authConfig from '@config/auth';
 
 export default function isAuthenticated(
   request: Request,
   response: Response,
   next: NextFunction,
-) {
-  const authHeader = request.body.authorization;
-
+): void {
+  const authHeader = request.headers.authorization;
   if (!authHeader) {
-    throw new AppError('JWT token is missing');
+    throw new AppError('JWT Token is missing.');
   }
-
-  const [, token] = authHeader.split(' '); // pegar somente o token, e não o tipo dele
-
+  const [, token] = authHeader.split(' ');
   try {
-    verify(token, authConfig.jwt.secret);
-    return next(); // se o token for válido, seguir em frente
+    const decodedToken = verify(token, authConfig.jwt.secret); //verificar se foi criado com esses parametros
+    return next();
   } catch {
-    throw new AppError('Invalid JWT token');
+    throw new AppError('Invalid JWT Token.');
   }
 }
