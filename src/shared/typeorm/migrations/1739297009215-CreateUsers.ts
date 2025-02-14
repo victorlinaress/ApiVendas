@@ -30,7 +30,7 @@ export class CreateUsers1739297009215 implements MigrationInterface {
           {
             name: "avatar",
             type: "varchar",
-            isUnique: true,
+            isUnique: false,
           },
           {
             name: "created_at",
