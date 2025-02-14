@@ -1,12 +1,13 @@
 import CreateUserService from '../services/CreateUserService';
 import ListUserService from '../services/ListUserService';
 import { Request, Response } from 'express';
-import AppError from '@shared/erros/AppErro'; 
+import AppError from '@shared/erros/AppErro';
 
 export default class UsersController {
   public async index(request: Request, response: Response): Promise<Response> {
     try {
       const listUser = new ListUserService();
+      console.log(request.user.id);
       const users = await listUser.execute();
       return response.json(users);
     } catch (error: unknown) {
